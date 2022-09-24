@@ -1,5 +1,6 @@
 const sql = require('../controllers/db');
 const jwt = require("jsonwebtoken")
+const bcrypt = require('bcrypt')
 
 
 const User = function(user){
@@ -23,9 +24,9 @@ User.create = (newUser, result)=>{
                         result(err, null);
                         return;
                     }
-                    const token = jwt.sign({id: newUser.id, email: newUser.email}, process.env.OCEAN_BLUE)
+                    const token = jwt.sign({id: res.insertId, email: newUser.email}, process.env.OCEAN_BLUE)
 
-                    console.log("created data")
+                    // console.log("created data")
                     result(token)
                     }
                 )
@@ -35,8 +36,25 @@ User.create = (newUser, result)=>{
 
 }
 
-User.checkExistingEmail = (newEmail, result)=>{
-
+User.login = (user, result)=>{
+    sql.query("SELECT * FROM userinfo WHERE email = ?", user.email, (err, res)=>{
+        if(err){
+            console.log("Exixting login Email Error: ", err)
+            return;
+        }else{
+            if(res.length >0){
+                const checkPass = bcrypt.compare(res[0].password, user.password)
+                if(checkPass == true){
+                    const token = jwt.sign({id: res[1].id, email: res[0].email, role:res[0].role}, process.env.OCEAN_BLUE)
+                    result(token)
+                }else if(checkPass == false){
+                    result("Invalid Email or Password!")
+                }
+            }else{
+                result("No account found!")
+            }
+        }
+    })
 }
 
 

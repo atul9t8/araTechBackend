@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt')
 const jwt = require("jsonwebtoken")
 
 
-const registration = async(req, res)=>{
+module.exports.registration = async(req, res)=>{
     if(req.body.email){
         if(req.body.password === req.body.cPassword){
             bcrypt.hash(req.body.password, 10, (err, hash)=>{
@@ -30,8 +30,22 @@ const registration = async(req, res)=>{
     }else{
         res.send("Enter an email address")
     }
-        
-
 }
 
-module.exports = registration
+
+module.exports.login = async(req, res)=>{
+    const user = new User({
+        email: req.body.email,
+        password: req.body.password
+    })
+
+    User.login(user, (err, data)=>{
+        if(err){
+            res.send(err)
+        }else{
+            res.send()
+        }
+    })
+}
+
+// module.exports = {registration, login}
