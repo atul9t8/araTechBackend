@@ -1,35 +1,24 @@
 const express = require("express");
-const mysql = require('mysql');
-const db = require('./config');
-
-// // config.connect(function(err){
-// //     if(err){
-// //             console.log(err)
-// //     }else{
-// //         console.log("set")
-// //     }
-// // });
-
-// //registration
+const User = require("../models/userModel")
 
 const registration = async(req, res)=>{
     if(req.body.email){
-        let reqEmail = {
-            email : req.body.email
+        const user = new User({
+        email: req.body.email,
+        password: req.body.password
+    })
+
+    User.create(user, (err, data)=>{
+        if(err){
+            res.send(err)
+        }else{
+            res.send(data)
         }
-
-        let query = "SELECT * FROM `userinfo` WHERE ?"
-
-        db.connect(query, reqEmail, function(err, result){
-            if(err){
-                console.log(err)
-            }else{
-                console.log(result)
-            }
-        })
+    }) 
+    }else{
+        res.send("Enter an email address")
     }
-}
 
-// module.exports = {registration}
+}
 
 module.exports = registration
