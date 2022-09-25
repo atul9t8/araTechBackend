@@ -1,7 +1,6 @@
 const sql = require('../controllers/db');
 const fs = require('fs');
-const e = require('express');
-
+const path = require('path');
 
 const Gallery = function(gallery){
     this.image = gallery.image
@@ -34,12 +33,8 @@ Gallery.deleteById = (id, result)=>{
             result(err)
         }else{
             if(res.length > 0){
-                // result(res[0].name)
 
-                fs.unlink(`Gallery/${res[0].name}`, (err)=>{
-                    if(err){
-                        result(err)
-                    }else{
+                fs.unlinkSync("Gallery/"+`${res[0].name}`)
                         sql.query("DELETE FROM gallery WHERE id=?", id, (err, res)=>{
                             if(err){
                                 result(err)
@@ -48,11 +43,9 @@ Gallery.deleteById = (id, result)=>{
                             }
                         })
                     }
-                })
-            }else{
+            else{
                 result("No Images Found!")
             }
-            // result(res[0].name)
         }
     })
 }
