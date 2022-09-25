@@ -43,13 +43,15 @@ User.login = (user, result)=>{
             return;
         }else{
             if(res.length >0){
-                const checkPass = bcrypt.compare(res[0].password, user.password)
-                if(checkPass == true){
-                    const token = jwt.sign({id: res[1].id, email: res[0].email, role:res[0].role}, process.env.OCEAN_BLUE)
-                    result(token)
-                }else if(checkPass == false){
-                    result("Invalid Email or Password!")
-                }
+                bcrypt.compare(user.password, res[0].password).then(function(check){
+                    if(check == true){
+                        console.log(check)
+                        const token = jwt.sign({id: res[0].id, email: res[0].email, role:res[0].role}, process.env.OCEAN_BLUE)
+                        result(token)
+                    }else{
+                        result("Invalid Email or Password!")
+                    }
+                })
             }else{
                 result("No account found!")
             }

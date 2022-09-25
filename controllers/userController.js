@@ -43,7 +43,7 @@ module.exports.login = async(req, res)=>{
         if(err){
             res.send(err)
         }else{
-            res.send()
+            res.send(data)
         }
     })
 }
