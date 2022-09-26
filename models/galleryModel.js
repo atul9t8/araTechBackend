@@ -34,7 +34,7 @@ Gallery.deleteById = (id, result)=>{
         }else{
             if(res.length > 0){
 
-                fs.unlinkSync("Gallery/"+`${res[0].name}`)
+                fs.unlinkSync("Gallery/galleryImage/"+`${res[0].name}`)
                         sql.query("DELETE FROM gallery WHERE id=?", id, (err, res)=>{
                             if(err){
                                 result(err)
