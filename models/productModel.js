@@ -37,21 +37,22 @@ Product.getAllProduct = (result)=>{
 }
 
 
-Product.findImageFroUpdate = (id, result)=>{
-
-    sql.query("SELECT * FROM products WHERE id = ?", id, (err, res)=>{
+Product.findImageForUpdate = (id, result)=>{
+    sql.query("SELECT image FROM products WHERE id = ?", id, (err, res)=>{
         if(res){
-            // let image = res[0].image
-            result(null, res)
-            // sql.query("UPDATE INTO products SET ? WHERE id= ?", id, (err, res)=>{
-            //     if(err){
-            //         result(err)
-            //     }else{
-            //         result("updated")
-            //     }
-            // })
+            result(null, res[0].image)
         }else{
             result("not Found!")
+        }
+    })
+}
+
+Product.imageUpdate = (id, result)=>{
+    sql.query("UPDATE products SET image= ? WHERE id= ?", id, (err, res)=>{
+        if(err){
+            result(err)
+        }else{
+            result("updated")
         }
     })
 }

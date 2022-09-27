@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const bodyParser = require("body-parser")
 // const bodyParser = require("body-parser")
 const userRouter = require("./routers/userRouter")
 const galleryRouter = require("./routers/galleryRouter")
@@ -13,6 +14,10 @@ require('dotenv').config()
 app.use(cors())
 app.use(express.json())
 // app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+    extended: true
+  })); 
+
 
 app.use('/user', userRouter)
 app.use('/gallery', galleryRouter)

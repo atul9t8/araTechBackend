@@ -15,6 +15,7 @@ const multer = require("multer");
             file.mimetype === "image/png"){
                 callBack(null, true)
         } else{
+            // console.log(file)
             callBack(null, false)
         }
     }
