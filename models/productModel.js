@@ -13,7 +13,6 @@ const Product = function(product){
     this.subcategory = product.subcategory;
     this.subsubcategory = product.subsubcategory;
     this.image = product.image;
-    // this.reviews = product.reviews;
     this.tags = product.tags;
 }
 
@@ -22,7 +21,7 @@ Product.create = (newProduct, result)=>{
         if(err){
             result(err)
         }else{
-            result(newProduct)
+            result(null, newProduct)
         }
     })
 }
@@ -32,11 +31,40 @@ Product.getAllProduct = (result)=>{
         if(err){
             result(err)
         }else{
-            result(res)
+            result(null, res)
         }
     })
 }
 
+
+Product.findImageFroUpdate = (id, result)=>{
+
+    sql.query("SELECT * FROM products WHERE id = ?", id, (err, res)=>{
+        if(res){
+            // let image = res[0].image
+            result(null, res)
+            // sql.query("UPDATE INTO products SET ? WHERE id= ?", id, (err, res)=>{
+            //     if(err){
+            //         result(err)
+            //     }else{
+            //         result("updated")
+            //     }
+            // })
+        }else{
+            result("not Found!")
+        }
+    })
+}
+
+Product.update = (id, result)=>{
+    sql.query("UPDATE INTO products SET ? WHERE id= ?", id, (err, res)=>{
+        if(err){
+            result(err)
+        }else{
+            result("updated")
+        }
+    })
+}
 
 Product.deleteById = (id, result)=>{
     sql.query("SELECT * FROM products WHERE id=?", id, (err, res)=>{
@@ -66,7 +94,7 @@ Product.findById = (id, result)=>{
         if(err){
             result(err)
         }else{
-            result(res)
+            result(null , res)
         }
     })
 }
@@ -76,7 +104,7 @@ Product.findByCategory = (category, result)=>{
         if(err){
             result(err)
         }else{
-            result(res)
+            result(null, res)
         }
     })
 }
@@ -86,7 +114,7 @@ Product.findBySubcategory = (category, result)=>{
         if(err){
             result(err)
         }else{
-            result(res)
+            result(null, res)
         }
     })
 }
@@ -96,7 +124,7 @@ Product.findBySubsubcategory = (category, result)=>{
         if(err){
             result(err)
         }else{
-            result(res)
+            result(null, res)
         }
     })
 }

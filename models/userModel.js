@@ -14,7 +14,7 @@ User.create = (newUser, result)=>{
             console.log("Exixting Email Error: ", err)
             return;
         }else{
-            if(res.length){
+            if(res.length > 0){
                 console.log(res.length);
                 result("Email Already Exists!")
             }else{

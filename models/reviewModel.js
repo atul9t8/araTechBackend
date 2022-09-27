@@ -19,5 +19,14 @@ Review.create = (newReview, result)=>{
     })
 }
 
+Review.findById = (id, result)=>{
+    sql.query("SELECT * FROM allreviews WHERE productId= ?", id, (err, res)=>{
+        if(err){
+            result(err)
+        }else{
+            result(res)
+        }
+    })
+}
 
 module.exports = Review
