@@ -81,8 +81,18 @@ Product.findByCategory = (category, result)=>{
     })
 }
 
-Product.findBySubategory = (category, subcategory, result)=>{
-    sql.query("SELECT * FROM products WHERE category=? AND subcategory=?", category, subcategory, (err, res)=>{
+Product.findBySubcategory = (category, result)=>{
+    sql.query("SELECT * FROM products WHERE category= ? AND subcategory= ?", category, (err, res)=>{
+        if(err){
+            result(err)
+        }else{
+            result(res)
+        }
+    })
+}
+
+Product.findBySubsubcategory = (category, result)=>{
+    sql.query("SELECT * FROM products WHERE category= ? AND subcategory= ? AND subsubcategory= ?", category, (err, res)=>{
         if(err){
             result(err)
         }else{

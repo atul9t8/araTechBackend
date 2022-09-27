@@ -31,7 +31,6 @@ module.exports.createProduct = async(req, res)=>{
             }
         })
     })
-
 }
 
 module.exports.getProducts = async(req, res)=>{
@@ -76,10 +75,10 @@ module.exports.findByCategory = async(req, res)=>{
 }
 
 
-module.exports.findBySubategory = async(req, res)=>{
+module.exports.findBySubcategory = async(req, res)=>{
     let category = req.params.category;
     let subcategory = req.params.subcategory;
-    Product.findById(category, subcategory, (err,data)=>{
+    Product.findBySubcategory([category, subcategory], (err,data)=>{
         if(err){
             res.send(err)
         }else{
@@ -88,7 +87,18 @@ module.exports.findBySubategory = async(req, res)=>{
     })
 }
 
-
+module.exports.findBySubsubcategory = async(req, res)=>{
+    let category = req.params.category;
+    let subcategory = req.params.subcategory;
+    let subsubcategory = req.params.subsubcategory;
+    Product.findBySubsubcategory([category, subcategory, subsubcategory], (err,data)=>{
+        if(err){
+            res.send(err)
+        }else{
+            res.send(data)
+        }
+    })
+}
 
 // module.exports.findById = async(req, res)=>{
 //     Product.findById(req.params.id, (err,data)=>{
