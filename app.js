@@ -7,6 +7,7 @@ const galleryRouter = require("./routers/galleryRouter")
 const productRouter = require("./routers/productRouter")
 const ReviewRouter = require("./routers/reviewRouter")
 const headerFooterRouter = require("./routers/headerFooterRouter")
+const orderRouter = require("./routers/orderRouter")
 const app = express();
 
 require('dotenv').config()
@@ -24,7 +25,7 @@ app.use('/user', userRouter)
 app.use('/gallery', galleryRouter)
 app.use('/products', productRouter)
 app.use('/review', ReviewRouter)
-app.use('/headerFooter', headerFooterRouter)
+app.use('/order', orderRouter)
 
 
 port = process.env.PORT || 8088

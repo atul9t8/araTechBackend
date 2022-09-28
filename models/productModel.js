@@ -90,8 +90,8 @@ Product.deleteById = (id, result)=>{
     })
 }
 
-Product.findById = (id, result)=>{
-    sql.query("SELECT * FROM products WHERE id=?", id, (err, res)=>{
+Product.findBySingleValue = (id, result)=>{
+    sql.query("SELECT * FROM products WHERE ?", id, (err, res)=>{
         if(err){
             result(err)
         }else{

@@ -1,13 +1,13 @@
 const express = require('express');
 const authorize = require("../middlewares/authorize");
 const admin = require("../middlewares/admin")
-const {createProduct, getProducts, updateProductImage, updateProductInfo, deleteById, findById, findByCategory,
+const {createProduct, getProducts, updateProductImage, updateProductInfo, deleteById, findBySingleValue, findByCategory,
     findBySubcategory, findBySubsubcategory} = require("../controllers/productController")
 const router = express.Router()
 
 
 router.get('/', getProducts)
-router.get('/:id', findById)
+router.get('/searchedProduct', findBySingleValue)
 router.get('/productCategory/:category', findByCategory)
 router.get('/productCategory/:category/:subcategory', findBySubcategory)
 router.get('/productCategory/:category/:subcategory/:subsubcategory', findBySubsubcategory)

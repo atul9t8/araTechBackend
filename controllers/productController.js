@@ -117,8 +117,8 @@ module.exports.deleteById = async(req, res)=>{
     })
 }
 
-module.exports.findById = async(req, res)=>{
-    Product.findById(req.params.id, (err,data)=>{
+module.exports.findBySingleValue = async(req, res)=>{
+    Product.findBySingleValue(req.body, (err,data)=>{
         if(err){
             res.send(err)
         }else{
