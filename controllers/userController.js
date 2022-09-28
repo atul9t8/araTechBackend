@@ -48,4 +48,61 @@ module.exports.login = async(req, res)=>{
     })
 }
 
-// module.exports = {registration, login}
+
+module.exports.update = async(req, res)=>{
+    if(req.body.email && req.body.password){
+        if(req.body.password === req.body.cPassword){
+            bcrypt.hash(req.body.password, 10, (err, hash)=>{
+                password = hash;
+                const user = {
+                    email: req.body.email,
+                    password: hash
+                    }
+                
+                User.update([user, req.params.id], (err, data)=>{
+                    if(err){
+                        res.send(err)
+                    }else{
+                        res.send(data)
+                    }
+                    }
+                )
+            })
+        }else{
+            res.send("Password and Confirm password doesn't match!")
+        }
+        
+    }else if(req.body.email){
+        const user = {
+            email: req.body.email,
+            }
+        User.update([user, req.params.id], (err, data)=>{
+            if(err){
+                res.send(err)
+            }else{
+                res.send(data)
+            }
+        })
+    } else if(req.body.password){
+        if(req.body.password === req.body.cPassword){
+            bcrypt.hash(req.body.password, 10, (err, hash)=>{
+                password = hash;
+                const user = ({
+                    password: hash
+                    }
+                )
+                User.update([user, req.params.id], (err, data)=>{
+                    if(err){
+                        res.send(err)
+                    }else{
+                        res.send(data)
+                    }
+                    }
+                )
+            })
+        }else{
+            res.send("Password and Confirm password doesn't match!")
+        }
+    }
+}
+

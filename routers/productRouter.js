@@ -1,7 +1,7 @@
 const express = require('express');
 const authorize = require("../middlewares/authorize");
 const admin = require("../middlewares/admin")
-const {createProduct, getProducts, updateProductImage, deleteById, findById, findByCategory,
+const {createProduct, getProducts, updateProductImage, updateProductInfo, deleteById, findById, findByCategory,
     findBySubcategory, findBySubsubcategory} = require("../controllers/productController")
 const router = express.Router()
 
@@ -14,6 +14,7 @@ router.get('/productCategory/:category/:subcategory/:subsubcategory', findBySubs
 router.post('/create', [authorize, admin], createProduct)
 router.delete('/delete', [authorize, admin], deleteById)
 router.put('/updateImage/:id', [authorize, admin], updateProductImage)
+router.put('/updateInfo/:id', [authorize, admin], updateProductInfo)
 
 // router.delete('/delete', [authorize, admin], deleteImage)
 

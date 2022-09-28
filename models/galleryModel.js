@@ -17,6 +17,15 @@ Gallery.create = (newImage, result)=>{
     })
 }
 
+Gallery.getAllImage = (result)=>{
+    sql.query("SELECT * FROM gallery ORDER BY id DESC", (err, res)=>{
+        if(err){
+            result(err)
+        }else{
+            result(null, res)
+        }
+    })
+}
 Gallery.findById = (id, result)=>{
     sql.query("SELECT * FROM gallery WHERE id=?", id, (err, res)=>{
         if(err){

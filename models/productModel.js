@@ -52,17 +52,17 @@ Product.imageUpdate = (id, result)=>{
         if(err){
             result(err)
         }else{
-            result("updated")
+            result(null, "updated")
         }
     })
 }
 
-Product.update = (id, result)=>{
-    sql.query("UPDATE INTO products SET ? WHERE id= ?", id, (err, res)=>{
+Product.updateInfo = (id, result)=>{
+    sql.query("UPDATE products SET ? WHERE id= ?", id, (err, res)=>{
         if(err){
             result(err)
         }else{
-            result("updated")
+            result(null,"updated")
         }
     })
 }

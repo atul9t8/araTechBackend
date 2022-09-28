@@ -51,41 +51,60 @@ module.exports.getProducts = async(req, res)=>{
 
 module.exports.updateProductImage = async(req, res)=>{
 
-            upload(req, res, function(err){
-                if(err instanceof multer.MulterError){
-                    console.log(req.file)
-                } else if(err){
-                    res.send(err)
-                } 
-                let newImage = req.file.filename;
-                Product.findImageForUpdate(req.params.id, (err, data)=>{
+    upload(req, res, function(err){
+        if(err instanceof multer.MulterError){
+            console.log(req.file)
+        } else if(err){
+            res.send(err)
+        } 
+        let newImage = req.file.filename;
+        Product.findImageForUpdate(req.params.id, (err, data)=>{
+            if(err){
+                res.send(err)
+            }else{
+                let image = data;
+                console.log(image)
+                fs.unlink('Gallery/productImage/'+`${image}`, err=>{
+                    if(err){
+                        res.send(err)
+                    }
+                })
+                Product.imageUpdate([newImage, req.params.id], (err, data)=>{
                     if(err){
                         res.send(err)
                     }else{
-                        let image = data;
-                        console.log(image)
-                        fs.unlink('Gallery/productImage/'+`${image}`, err=>{
-                            if(err){
-                                res.send(err)
-                            }
-                        })
-                        Product.imageUpdate([newImage, req.params.id], (err, data)=>{
-                            if(err){
-                                res.send(err)
-                            }else{
-                                res.send(data)
-                            }
-                        })
+                        res.send(data)
                     }
                 })
-                // res.json(res)
-                // if(req.file.filename){
-                //     res.send(req.file.filename)
-                // }else{
-                //     res.send("none")
-                // }
+            }
+        })
 
-            })
+    })
+}
+
+module.exports.updateProductInfo = async(req, res)=>{
+    if(req.body.specifications){
+        let specifications = JSON.stringify(req.body.specifications)
+        delete req.body.specifications;
+        req.body.specifications = specifications
+
+        Product.updateInfo([req.body, req.params.id], (err, data)=>{
+            if(err){
+                res.send(err)
+            }else{
+                res.send(data)
+            }
+        })
+    }else{
+        Product.updateInfo([req.body, req.params.id], (err, data)=>{
+            if(err){
+                res.send(err)
+            }else{
+                res.send(data)
+            }
+        })
+    }
+
 }
 
 module.exports.deleteById = async(req, res)=>{
@@ -144,13 +163,3 @@ module.exports.findBySubsubcategory = async(req, res)=>{
         }
     })
 }
-
-// module.exports.findById = async(req, res)=>{
-//     Product.findById(req.params.id, (err,data)=>{
-//         if(err){
-//             res.send(err)
-//         }else{
-//             res.send(data)
-//         }
-//     })
-// }

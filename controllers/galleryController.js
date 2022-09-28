@@ -39,3 +39,12 @@ module.exports.deleteImage = async(req, res)=>{
         }
     })
 }
+module.exports.getAllImage = async(req, res)=>{
+    Gallery.getAllImage((err, data)=>{
+        if(err){
+            res.send(err)
+        }else{
+            res.send(data)
+        }
+    })
+}
