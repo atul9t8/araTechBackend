@@ -8,7 +8,7 @@ const router = express.Router()
 router.post('/create', [authorize, admin], uploadImage)
 router.get('/image', [authorize, admin], getImage)
 router.delete('/delete', [authorize, admin], deleteImage)
-router.get('/getImage', [authorize, admin], getAllImage)
+router.get('/getImage', getAllImage)
 
 
 module.exports = router;
