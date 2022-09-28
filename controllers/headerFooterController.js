@@ -13,6 +13,16 @@ module.exports.create = async(req, res)=>{
 }
 
 
+module.exports.get = async(req, res)=>{
+    HeaderInfo.get((err, data)=>{
+        if(err){
+            res.send(err)
+        }else{
+            res.send(data)
+        }
+    })
+}
+
 module.exports.update = async(req, res)=>{
     HeaderInfo.update([req.body, 1], (err, data)=>{
         if(err){

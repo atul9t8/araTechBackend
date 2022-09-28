@@ -29,6 +29,16 @@ Information.create = (newInformation, result)=>{
     )
 }
 
+Information.get = (result)=>{
+    sql.query("SELECT * FROM headerinfo", (err, res)=>{
+        if(err){
+            result(err, null);
+        }
+        result(null, res);
+        }
+    )
+}
+
 Information.update = (id, result)=>{
     sql.query("UPDATE headerinfo SET ? WHERE id= ?", id, (err, res)=>{
         if(err){
