@@ -56,7 +56,7 @@ User.login = (user, result)=>{
                 bcrypt.compare(user.password, res[0].password).then(function(check){
                     if(check == true){
                         const token = jwt.sign({id: res[0].id, email: res[0].email, role:res[0].role}, process.env.OCEAN_BLUE)
-                        result(null, {token : token, id:res[0].id, email:res[0].email})
+                        result(null, {token : token, message: "Account Accesed", id:res[0].id, email:res[0].email})
                     }else{
                         result(null, "Invalid Email or Password!")
                     }
