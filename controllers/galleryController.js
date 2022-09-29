@@ -11,7 +11,8 @@ module.exports.uploadImage = async(req, res)=>{
         } else if(err){
             res.send(err)
         }
-        Gallery.create(req.file.filename, (err, data)=>{
+        let newImage = {name:req.file.filename, imagePath : req.file.path}
+        Gallery.create(newImage, (err, data)=>{
             if(err){
                 res.send(err)
             }else{

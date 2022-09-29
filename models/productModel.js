@@ -13,6 +13,7 @@ const Product = function(product){
     this.subcategory = product.subcategory;
     this.subsubcategory = product.subsubcategory;
     this.image = product.image;
+    this.imagePath = product.imagePath;
     this.tags = product.tags;
 }
 
@@ -48,7 +49,7 @@ Product.findImageForUpdate = (id, result)=>{
 }
 
 Product.imageUpdate = (id, result)=>{
-    sql.query("UPDATE products SET image= ? WHERE id= ?", id, (err, res)=>{
+    sql.query("UPDATE products SET ? WHERE id= ?", id, (err, res)=>{
         if(err){
             result(err)
         }else{

@@ -27,6 +27,7 @@ module.exports.createProduct = async(req, res)=>{
             subcategory: req.body.subcategory,
             subsubcategory: req.body.subsubcategory,
             image: req.file.filename,
+            imagePath: req.file.path,
             tags: req.body.tags
         })
         Product.create(product, (err, data)=>{
@@ -57,7 +58,7 @@ module.exports.updateProductImage = async(req, res)=>{
         } else if(err){
             res.send(err)
         } 
-        let newImage = req.file.filename;
+        let newImage ={image: req.file.filename, imagePath: req.file.path};
         Product.findImageForUpdate(req.params.id, (err, data)=>{
             if(err){
                 res.send(err)

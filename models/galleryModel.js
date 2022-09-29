@@ -4,15 +4,16 @@ const path = require('path');
 
 const Gallery = function(gallery){
     this.image = gallery.image
+    this.imagePath = gallery.imagePath
 }
 
 Gallery.create = (newImage, result)=>{
-    sql.query("INSERT INTO gallery SET name=?", newImage, (err, res)=>{
+    sql.query("INSERT INTO gallery SET ?", newImage, (err, res)=>{
         if(err){
             result(err)
         }else{
             result({imageId : res.insertId,
-                imagePath : newImage})
+                image : newImage})
         }
     })
 }
@@ -31,7 +32,7 @@ Gallery.findById = (id, result)=>{
         if(err){
             result(err)
         }else{
-            result(res[0].name)
+            result(null, res)
         }
     })
 }
